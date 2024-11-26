@@ -1,34 +1,30 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request as ExpressRequest, Response as ExpressResponse } from 'express'
 import {
-  IGetOrderPaymentUseCase,
-  IListenOrderPaymentUseCase,
-  IMakeCheckoutUseCase,
+  ICreateOrderUseCase,
   ISearchOrdersUseCase,
   IUpdateOrderStatusUseCase,
 } from '@core/application/use-cases'
+import { OrderCurrentStatus } from '@core/domain/entities'
 import { IOrderController } from './types/controllers'
 import { HttpResponseHelper } from '../helpers'
-import { OrderCurrentStatus } from '@core/domain/entities'
 
 export class OrderController implements IOrderController {
   constructor(
-    private readonly makeCheckoutUseCase: IMakeCheckoutUseCase,
+    private readonly createOrderUseCase: ICreateOrderUseCase,
     private readonly searchOrdersUseCase: ISearchOrdersUseCase,
     private readonly updateOrderStatusUseCase: IUpdateOrderStatusUseCase,
-    private readonly getOrderPaymentUseCase: IGetOrderPaymentUseCase,
-    private readonly listenOrderPaymentUseCase: IListenOrderPaymentUseCase,
   ) {}
 
-  async makeCheckout(
+  async createOrder(
     request: ExpressRequest,
     response: ExpressResponse,
   ): Promise<ExpressResponse> {
     try {
-      const orderData = await this.makeCheckoutUseCase.execute({
+      const orderData = await this.createOrderUseCase.execute({
         customerId: request.body.customerId,
         items: request.body.items,
         orderAmount: request.body.orderAmount,
-        payment: request.body.payment,
       })
       return HttpResponseHelper.onSucess(response, { data: orderData })
     } catch (error) {
@@ -63,37 +59,6 @@ export class OrderController implements IOrderController {
         status,
       })
       return HttpResponseHelper.onSucess(response, { data: updatedOrderData })
-    } catch (error) {
-      return HttpResponseHelper.onError(response, { error })
-    }
-  }
-
-  async getOrderPayment(
-    request: ExpressRequest,
-    response: ExpressResponse,
-  ): Promise<ExpressResponse> {
-    try {
-      const orderId = request.params.id
-      const orderPaymentData = await this.getOrderPaymentUseCase.execute({
-        orderId: Number(orderId),
-      })
-      return HttpResponseHelper.onSucess(response, { data: orderPaymentData })
-    } catch (error) {
-      return HttpResponseHelper.onError(response, { error })
-    }
-  }
-
-  async listenOrderPayment(
-    request: ExpressRequest,
-    response: ExpressResponse,
-  ): Promise<ExpressResponse> {
-    try {
-      const { action, data } = request.body
-      await this.listenOrderPaymentUseCase.execute({
-        action,
-        externalPaymentId: data?.id,
-      })
-      return HttpResponseHelper.onSucess(response, { data: 'OK' })
     } catch (error) {
       return HttpResponseHelper.onError(response, { error })
     }

@@ -27,7 +27,7 @@ export interface IProductController {
 }
 
 export interface IOrderController {
-  makeCheckout(
+  createOrder(
     request: ExpressRequest,
     response: ExpressResponse,
   ): Promise<ExpressResponse>
@@ -36,14 +36,6 @@ export interface IOrderController {
     response: ExpressResponse,
   ): Promise<ExpressResponse>
   updateOrderStatus(
-    request: ExpressRequest,
-    response: ExpressResponse,
-  ): Promise<ExpressResponse>
-  getOrderPayment(
-    request: ExpressRequest,
-    response: ExpressResponse,
-  ): Promise<ExpressResponse>
-  listenOrderPayment(
     request: ExpressRequest,
     response: ExpressResponse,
   ): Promise<ExpressResponse>

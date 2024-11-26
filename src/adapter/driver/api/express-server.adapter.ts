@@ -3,17 +3,11 @@ import swaggerUI from 'swagger-ui-express'
 import swaggerDocument from './config/swagger/swagger.json'
 import { IHttpServer } from './types/http-server'
 import {
-  ICustomerController,
   IProductController,
   IOrderController,
   IHealthController,
 } from './controllers/types/controllers'
-import {
-  customerRoutes,
-  productRoutes,
-  orderRoutes,
-  healthRoutes,
-} from './routes'
+import { productRoutes, orderRoutes, healthRoutes } from './routes'
 
 export class ExpressHttpServerAdapter implements IHttpServer {
   app: Express
@@ -21,7 +15,6 @@ export class ExpressHttpServerAdapter implements IHttpServer {
 
   constructor(
     private readonly healthController: IHealthController,
-    private readonly customerController: ICustomerController,
     private readonly productController: IProductController,
     private readonly orderController: IOrderController,
   ) {
@@ -34,7 +27,6 @@ export class ExpressHttpServerAdapter implements IHttpServer {
 
   private configRoutes(): void {
     this.configHealthRoutes()
-    this.configCustomerRoutes()
     this.configProductRoutes()
     this.configOrderRoutes()
     this.app.use(this.router)
@@ -49,19 +41,6 @@ export class ExpressHttpServerAdapter implements IHttpServer {
         route.resource,
         route.middleware,
         this.healthController[route.handler].bind(this.healthController),
-      )
-    })
-  }
-
-  private configCustomerRoutes(): void {
-    customerRoutes.forEach(route => {
-      console.log(
-        `[HttpServer] Rota ${route.method.toUpperCase()} ${route.resource}`,
-      )
-      this.router[route.method](
-        route.resource,
-        route.middleware,
-        this.customerController[route.handler].bind(this.customerController),
       )
     })
   }

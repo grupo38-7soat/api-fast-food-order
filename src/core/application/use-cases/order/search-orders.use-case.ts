@@ -51,9 +51,9 @@ export class SearchOrdersUseCase implements ISearchOrdersUseCase {
           status,
           effectiveDate,
           totalAmount,
-          payment,
-          customer,
           updatedAt,
+          payment,
+          customerId,
         } = order.toJson()
         const waitingTime = getMinutesInterval(
           new Date(),
@@ -64,8 +64,8 @@ export class SearchOrdersUseCase implements ISearchOrdersUseCase {
           status,
           effectiveDate: formatDateWithTimezone(new Date(effectiveDate)),
           totalAmount,
-          paymentId: payment.id,
-          customerId: customer?.id,
+          payment,
+          customerId,
           updatedAt: formatDateWithTimezone(new Date(updatedAt)),
           waitingTime,
         }

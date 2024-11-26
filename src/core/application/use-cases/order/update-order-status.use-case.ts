@@ -23,7 +23,7 @@ export class UpdateOrderStatusUseCase implements IUpdateOrderStatusUseCase {
     }
     if (
       !(status in OrderCurrentStatus) ||
-      status === OrderCurrentStatus.RECEBIDO
+      status === OrderCurrentStatus.PENDENTE
     ) {
       throw new DomainException(
         'O status deve ser válido',
@@ -39,6 +39,7 @@ export class UpdateOrderStatusUseCase implements IUpdateOrderStatusUseCase {
     }
     const previousStatus = currentOrder.getStatus()
     const updateTo = {
+      [OrderCurrentStatus.RECEBIDO]: () => currentOrder.receiveOrder(),
       [OrderCurrentStatus.EM_PREPARO]: () => currentOrder.initOrder(),
       [OrderCurrentStatus.CANCELADO]: () => currentOrder.cancelOrder(),
       [OrderCurrentStatus.PRONTO]: () => currentOrder.doneOrder(),

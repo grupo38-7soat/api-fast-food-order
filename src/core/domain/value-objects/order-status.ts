@@ -42,6 +42,23 @@ abstract class OrderStatus {
   }
 }
 
+class PendingOrderStatus extends OrderStatus {
+  value: OrderCurrentStatus
+
+  constructor(order: Order) {
+    super(order)
+    this.value = OrderCurrentStatus.PENDENTE
+  }
+
+  receive(): void {
+    this.order.setStatus(new ReceivedOrderStatus(this.order))
+  }
+
+  cancel(): void {
+    this.order.setStatus(new CancelledOrderStatus(this.order))
+  }
+}
+
 class ReceivedOrderStatus extends OrderStatus {
   value: OrderCurrentStatus
 
@@ -110,6 +127,7 @@ class CancelledOrderStatus extends OrderStatus {
 class OrderStatusFactory {
   static create(Order: Order, status: OrderCurrentStatus) {
     const Orders = {
+      [OrderCurrentStatus.PENDENTE]: new PendingOrderStatus(Order),
       [OrderCurrentStatus.RECEBIDO]: new ReceivedOrderStatus(Order),
       [OrderCurrentStatus.EM_PREPARO]: new InProgressOrderStatus(Order),
       [OrderCurrentStatus.PRONTO]: new ReadyOrderStatus(Order),

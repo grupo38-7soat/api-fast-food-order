@@ -12,42 +12,8 @@ end if;
 end
 $$;
 
-create table if not exists fast_food.customer (
-    id uuid,
-    name varchar(255) not null,
-    document varchar(11) not null unique,
-    email varchar(255) not null,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp,
-    constraint pk_customer primary key (id)
-);
-
-create type fast_food.payment_type_enum as enum (
-  'DINHEIRO',
-  'CARTAO_CREDITO',
-  'CARTAO_DEBITO',
-  'PIX',
-  'VALE_REFEICAO'
-);
-
-create type fast_food.payment_status_enum as enum (
-  'PENDENTE',
-  'AUTORIZADO',
-  'REJEITADO',
-  'REEMBOLSADO'
-);
-
-create table if not exists fast_food.payment(
-    id uuid,
-    effective_date timestamp default current_timestamp,
-    type fast_food.payment_type_enum not null,
-    status fast_food.payment_status_enum not null default 'PENDENTE',
-    updated_at timestamp default current_timestamp,
-    external_id varchar,
-    constraint pk_payment primary key (id)
-);
-
 create type fast_food.order_status_enum as enum (
+  'PENDENTE',
   'RECEBIDO',
   'EM_PREPARO',
   'PRONTO',
@@ -59,13 +25,11 @@ create table if not exists fast_food.order (
     id bigserial,
     customer_id uuid,
     total_amount numeric(10, 2) not null,
-    status fast_food.order_status_enum not null default 'RECEBIDO',
-    payment_id uuid not null,
+    status fast_food.order_status_enum not null default 'PENDENTE',
+    payment jsonb,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
-    constraint pk_order primary key (id),
-    constraint fk_order_customer foreign key (customer_id) references fast_food.customer(id),
-    constraint fk_order_payment foreign key (payment_id) references fast_food.payment(id)
+    constraint pk_order primary key (id)
 );
 
 create type fast_food.category_enum as enum (

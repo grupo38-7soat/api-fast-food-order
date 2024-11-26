@@ -17,7 +17,7 @@ export type OrderProduct = {
 }
 
 export interface IOrderRepository {
-  saveOrder(order: Order): Promise<number>
+  saveOrder(order: Order, customerId: string): Promise<number>
   saveOrderProduct(orderProduct: OrderProduct): Promise<void>
   updateOrderStatus(
     orderId: number,

@@ -1,6 +1,4 @@
-import {
-  OrderCurrentStatus,
-} from '@core/domain/entities'
+import { OrderCurrentStatus, Payment } from '@core/domain/entities'
 
 type Item = {
   id: number
@@ -8,33 +6,18 @@ type Item = {
   observation?: string
 }
 
-export type MakeCheckoutInput = {
+export type CreateOrderInput = {
   customerId?: string
   items: Item[]
   orderAmount: number
-  payment: Payment
 }
 
-export type MakeCheckoutOutput = {
+export type CreateOrderOutput = {
   order: {
     id: number
     status: OrderCurrentStatus
     effectiveDate: string
     totalAmount: number
-  }
-  payment: {
-    id: string
-    status: PaymentCurrentStatus
-    type: PaymentType
-    qrCode: string
-    ticketUrl: string
-    expirationDate: string
-  }
-  customer?: {
-    id: string
-    name: string
-    email: string
-    document: string
   }
 }
 
@@ -49,7 +32,7 @@ export type SearchOrdersOutput = {
   effectiveDate: string
   updatedAt: string
   totalAmount: number
-  paymentId: string
+  payment: Payment
   customerId: string
   waitingTime: number
 }
@@ -65,25 +48,8 @@ export type UpdateOrderStatusOutput = {
   updatedAt: string
 }
 
-export type GetOrderPaymentInput = {
-  orderId: number
-}
-
-export type GetOrderPaymentOutput = {
-  id: string
-  status: PaymentCurrentStatus
-  type: PaymentType
-  effectiveDate: string
-  externalId: string
-}
-
-export type ListenOrderPaymentInput = {
-  action: string
-  externalPaymentId: string
-}
-
-export interface IMakeCheckoutUseCase {
-  execute(input: MakeCheckoutInput): Promise<MakeCheckoutOutput>
+export interface ICreateOrderUseCase {
+  execute(input: CreateOrderInput): Promise<CreateOrderOutput>
 }
 
 export interface ISearchOrdersUseCase {
@@ -92,12 +58,4 @@ export interface ISearchOrdersUseCase {
 
 export interface IUpdateOrderStatusUseCase {
   execute(input: UpdateOrderStatusInput): Promise<UpdateOrderStatusOutput>
-}
-
-export interface IGetOrderPaymentUseCase {
-  execute(input: GetOrderPaymentInput): Promise<GetOrderPaymentOutput>
-}
-
-export interface IListenOrderPaymentUseCase {
-  execute(input: ListenOrderPaymentInput): Promise<void>
 }

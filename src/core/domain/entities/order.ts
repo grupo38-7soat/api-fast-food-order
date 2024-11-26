@@ -1,10 +1,9 @@
 import { DomainException, ExceptionCause } from '../base'
 import { OrderStatus, OrderStatusFactory } from '../value-objects'
-import { Customer, SerializedCustomer } from './customer'
-import { Payment, PaymentCurrentStatus, SerializedPayment } from './payment'
 import { Product, SerializedProduct } from './product'
 
 export enum OrderCurrentStatus {
+  PENDENTE = 'PENDENTE',
   RECEBIDO = 'RECEBIDO',
   EM_PREPARO = 'EM_PREPARO',
   PRONTO = 'PRONTO',
@@ -12,33 +11,42 @@ export enum OrderCurrentStatus {
   CANCELADO = 'CANCELADO',
 }
 
+export type Payment = {
+  id: string
+  type: string
+  paymentStatus: string
+  effectiveDate: string
+  updatedAt: string
+  externalId: string
+}
+
 type SerializedOrder = {
   id: number
   effectiveDate: string
   totalAmount: number
   status: OrderCurrentStatus
-  customer?: SerializedCustomer
   items: SerializedProduct[]
-  payment: SerializedPayment
   updatedAt?: string
+  customerId?: string
+  payment?: Payment
 }
 
 export class Order {
   private id: number
   private totalAmount: number
   private status: OrderStatus
-  private customer?: Customer
   private items: Product[]
-  private payment: Payment
   private createdAt: string
   private updatedAt: string
+  private customerId?: string
+  private payment?: Payment
 
   constructor(
     totalAmount: number,
     status: OrderCurrentStatus,
     products: Product[],
-    payment: Payment,
-    customer?: Customer,
+    payment?: Payment,
+    customerId?: string,
     id?: number,
     createdAt?: string,
     updatedAt?: string,
@@ -48,7 +56,7 @@ export class Order {
     this.setProducts(products)
     this.setTotalAmount(totalAmount)
     this.setPayment(payment)
-    this.setCustomer(customer)
+    this.setCustomerId(customerId)
     this.setCreatedAt(createdAt)
     this.setUpdatedAt(updatedAt)
   }
@@ -85,14 +93,14 @@ export class Order {
     return this.status.value
   }
 
-  private setCustomer(value: Customer): void {
+  private setCustomerId(value: string): void {
     if (value) {
-      this.customer = value
+      this.customerId = value
     }
   }
 
-  public getCustomer(): Customer {
-    return this.customer
+  public getCustomerId(): string {
+    return this.customerId
   }
 
   private setProducts(items: Product[]): void {
@@ -133,13 +141,11 @@ export class Order {
     return this.updatedAt
   }
 
+  public receiveOrder(): void {
+    this.status.receive()
+  }
+
   public initOrder(): void {
-    if (this.payment.getPaymentStatus() !== PaymentCurrentStatus.AUTORIZADO) {
-      throw new DomainException(
-        'O pedido não pode ser iniciado. Pagamento não autorizado.',
-        ExceptionCause.BUSINESS_EXCEPTION,
-      )
-    }
     this.status.init()
   }
 
@@ -161,9 +167,9 @@ export class Order {
       effectiveDate: this.createdAt,
       totalAmount: this.totalAmount,
       status: this.getStatus(),
-      customer: this.customer ? this.customer.toJson() : null,
+      customerId: this.customerId,
       items: [],
-      payment: this.payment ? this.payment.toJson() : null,
+      payment: this.payment,
       updatedAt: this.updatedAt,
     }
   }

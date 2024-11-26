@@ -18,29 +18,6 @@ export const healthRoutes: IRouteProps[] = [
   },
 ]
 
-export const customerRoutes: IRouteProps[] = [
-  {
-    resource: '/clientes',
-    method: HttpMethod.POST,
-    middleware: (
-      _request: ExpressRequest,
-      _response: ExpressResponse,
-      next: ExpressNextFuction,
-    ) => next(),
-    handler: 'createCustomer',
-  },
-  {
-    resource: '/clientes/:document',
-    method: HttpMethod.GET,
-    middleware: (
-      _request: ExpressRequest,
-      _response: ExpressResponse,
-      next: ExpressNextFuction,
-    ) => next(),
-    handler: 'getCustomerByDocument',
-  },
-]
-
 export const productRoutes: IRouteProps[] = [
   {
     resource: '/produtos',
@@ -86,14 +63,14 @@ export const productRoutes: IRouteProps[] = [
 
 export const orderRoutes: IRouteProps[] = [
   {
-    resource: '/checkout',
+    resource: '/pedidos',
     method: HttpMethod.POST,
     middleware: (
       _request: ExpressRequest,
       _response: ExpressResponse,
       next: ExpressNextFuction,
     ) => next(),
-    handler: 'makeCheckout',
+    handler: 'createOrder',
   },
   {
     resource: '/pedidos',
@@ -106,7 +83,7 @@ export const orderRoutes: IRouteProps[] = [
     handler: 'searchOrders',
   },
   {
-    resource: '/pedidos/:id/atualizar-status',
+    resource: '/pedidos/:id/status',
     method: HttpMethod.PUT,
     middleware: (
       _request: ExpressRequest,
@@ -114,25 +91,5 @@ export const orderRoutes: IRouteProps[] = [
       next: ExpressNextFuction,
     ) => next(),
     handler: 'updateOrderStatus',
-  },
-  {
-    resource: '/pedidos/:id/pagamento',
-    method: HttpMethod.GET,
-    middleware: (
-      _request: ExpressRequest,
-      _response: ExpressResponse,
-      next: ExpressNextFuction,
-    ) => next(),
-    handler: 'getOrderPayment',
-  },
-  {
-    resource: '/pedidos/webhook-pagamento',
-    method: HttpMethod.POST,
-    middleware: (
-      _request: ExpressRequest,
-      _response: ExpressResponse,
-      next: ExpressNextFuction,
-    ) => next(),
-    handler: 'listenOrderPayment',
   },
 ]

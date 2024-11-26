@@ -49,119 +49,6 @@
         }
       }
     },
-    "/clientes": {
-      "post": {
-        "tags": [
-          "Cliente"
-        ],
-        "summary": "Cria um novo cliente",
-        "operationId": "createCustomer",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateCustomerRequestBody"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Cliente criado com sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateCustomerResponseBody"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Erro na requisição",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Erro interno do servidor",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/clientes/{document}": {
-      "get": {
-        "tags": [
-          "Cliente"
-        ],
-        "summary": "Obtém um cliente pelo documento",
-        "operationId": "getCustomerByDocument",
-        "parameters": [
-          {
-            "name": "document",
-            "description": "CPF do cliente",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Cliente encontrado",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetCustomerByDocumentResponseBody"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Erro na requisição",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recurso não encontrado",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotFoundErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Erro interno do servidor",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/produtos": {
       "post": {
         "tags": [
@@ -410,19 +297,19 @@
         }
       }
     },
-    "/checkout": {
+    "/pedidos": {
       "post": {
         "tags": [
           "Pedido"
         ],
-        "summary": "Realiza um checkout",
-        "operationId": "makeCheckout",
+        "summary": "Realiza a criação de um pedido",
+        "operationId": "createOrder",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MakeCheckoutRequestBody"
+                "$ref": "#/components/schemas/CreateOrderRequestBody"
               }
             }
           }
@@ -433,7 +320,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MakeCheckoutResponseBody"
+                  "$ref": "#/components/schemas/CreateOrderResponseBody"
                 }
               }
             }
@@ -469,9 +356,7 @@
             }
           }
         }
-      }
-    },
-    "/pedidos": {
+      },
       "get": {
         "tags": [
           "Pedido"
@@ -539,7 +424,7 @@
         }
       }
     },
-    "/pedidos/{id}/atualizar-status": {
+    "/pedidos/{id}/status": {
       "put": {
         "tags": [
           "Pedido"
@@ -574,119 +459,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UpdateStatusResponseBody"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Erro na requisição",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Erro interno do servidor",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/pedidos/{id}/pagamento": {
-      "get": {
-        "tags": [
-          "Pedido"
-        ],
-        "summary": "Busca os detalhes do pagamento do pedido",
-        "operationId": "getOrderPayment",
-        "parameters": [
-          {
-            "name": "id",
-            "description": "Id do pedido",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Informação do pagamento",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetOrderPaymentResponseBody"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Erro na requisição",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Erro na requisição",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotFoundErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Erro interno do servidor",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DefaultErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/pedidos/webhook-pagamento": {
-      "post": {
-        "tags": [
-          "Pedido"
-        ],
-        "summary": "Recebe atualizações do pagamento vindas do Mercado Pago",
-        "operationId": "listenOrderPayment",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ListenOrderPaymentRequestBody"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Informação do status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ListenOrderPaymentResponseBody"
                 }
               }
             }
@@ -767,86 +539,6 @@
                     }
                   }
                 }
-              }
-            }
-          }
-        }
-      },
-      "CreateCustomerRequestBody": {
-        "type": "object",
-        "properties": {
-          "document": {
-            "type": "string",
-            "description": "CPF do cliente",
-            "example": "12345678911"
-          },
-          "email": {
-            "type": "string",
-            "description": "E-mail do cliente",
-            "example": "teste@email.com"
-          },
-          "name": {
-            "type": "string",
-            "description": "Nome do cliente",
-            "example": "Teste"
-          }
-        },
-        "required": [
-          "document",
-          "email",
-          "name"
-        ]
-      },
-      "CreateCustomerResponseBody": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Id do cliente criado",
-                "example": "610e5de2-9d0b-44c2-ba7b-5d872cd5a067"
-              }
-            }
-          }
-        }
-      },
-      "GetCustomerByDocumentResponseBody": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Id do cliente",
-                "example": "610e5de2-9d0b-44c2-ba7b-5d872cd5a067"
-              },
-              "document": {
-                "type": "string",
-                "description": "CPF do cliente",
-                "example": "12345678911"
-              },
-              "name": {
-                "type": "string",
-                "description": "Nome do cliente",
-                "example": "Teste"
-              },
-              "email": {
-                "type": "string",
-                "description": "E-mail do cliente",
-                "example": "teste@email.com"
-              },
-              "createdAt": {
-                "type": "string",
-                "description": "Data de criação do cliente",
-                "example": "2024-05-23T03:23:07.956Z"
-              },
-              "updatedAt": {
-                "type": "string",
-                "description": "Data da última atualização do cliente",
-                "example": "2024-05-23T03:23:07.956Z"
               }
             }
           }
@@ -975,7 +667,7 @@
           }
         }
       },
-      "MakeCheckoutRequestBody": {
+      "CreateOrderRequestBody": {
         "type": "object",
         "properties": {
           "customerId": {
@@ -1010,32 +702,14 @@
             "type": "double",
             "description": "Valor total do pedido",
             "example": 14.99
-          },
-          "payment": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "DINHEIRO",
-                  "CARTAO_CREDITO",
-                  "CARTAO_DEBITO",
-                  "PIX",
-                  "VALE_REFEICAO"
-                ],
-                "description": "Tipo de pagamento",
-                "example": "CARTAO_CREDITO"
-              }
-            }
           }
         },
         "required": [
           "items",
-          "orderAmount",
-          "payment"
+          "orderAmount"
         ]
       },
-      "MakeCheckoutResponseBody": {
+      "CreateOrderResponseBody": {
         "type": "object",
         "properties": {
           "data": {
@@ -1070,63 +744,6 @@
                     "type": "double",
                     "description": "Valor total do pedido",
                     "example": 14.99
-                  }
-                }
-              },
-              "payment": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Id do pagamento",
-                    "example": "f76408cc-f92a-419f-87f7-8e5fa451e34b"
-                  },
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "PENDENTE",
-                      "AUTORIZADO",
-                      "REJEITADO",
-                      "REEMBOLSADO"
-                    ],
-                    "description": "Status de pagamento",
-                    "example": "PENDENTE"
-                  },
-                  "type": {
-                    "enum": [
-                      "DINHEIRO",
-                      "CARTAO_CREDITO",
-                      "CARTAO_DEBITO",
-                      "PIX",
-                      "VALE_REFEICAO"
-                    ],
-                    "description": "Tipo de pagamento",
-                    "example": "CARTAO_CREDITO"
-                  }
-                }
-              },
-              "customer": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Id do cliente",
-                    "example": "1c014ba2-4000-4d40-be1e-352e29d07d89"
-                  },
-                  "document": {
-                    "type": "string",
-                    "description": "CPF do cliente",
-                    "example": "12345678911"
-                  },
-                  "email": {
-                    "type": "string",
-                    "description": "E-mail do cliente",
-                    "example": "teste@email.com"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "Nome do cliente",
-                    "example": "Teste"
                   }
                 }
               }
@@ -1237,83 +854,6 @@
                 "example": "2024-05-28T22:23:31.742Z"
               }
             }
-          }
-        }
-      },
-      "GetOrderPaymentResponseBody": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Id do pagamento",
-                "example": "f76408cc-f92a-419f-87f7-8e5fa451e34b"
-              },
-              "status": {
-                "type": "string",
-                "enum": [
-                  "PENDENTE",
-                  "AUTORIZADO",
-                  "REJEITADO",
-                  "REEMBOLSADO"
-                ],
-                "description": "Status de pagamento",
-                "example": "PENDENTE"
-              },
-              "type": {
-                "enum": [
-                  "DINHEIRO",
-                  "CARTAO_CREDITO",
-                  "CARTAO_DEBITO",
-                  "PIX",
-                  "VALE_REFEICAO"
-                ],
-                "description": "Tipo de pagamento",
-                "example": "PIX"
-              },
-              "effectiveDate": {
-                "type": "date",
-                "description": "Data de criação do pedido",
-                "example": "2024-05-28T22:23:31.742Z"
-              },
-              "externalId": {
-                "type": "string",
-                "description": "Id do pagamento do Mercado Pago",
-                "example": "1325544717"
-              }
-            }
-          }
-        }
-      },
-      "ListenOrderPaymentRequestBody": {
-        "type": "object",
-        "properties": {
-          "action": {
-            "type": "string",
-            "description": "Ação do evento recebido",
-            "example": "payment.created"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Id do pagamento do Mercado Pago",
-                "example": "1325544717"
-              }
-            }
-          }
-        }
-      },
-      "ListenOrderPaymentResponseBody": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "string",
-            "description": "Mensagem de sucesso",
-            "example": "OK"
           }
         }
       },

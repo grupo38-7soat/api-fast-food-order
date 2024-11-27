@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-focused-tests */
 import { RemoveProductUseCase } from '@core/application/use-cases'
 import { Category, Product } from '@core/domain/entities'
 import { IProductRepository } from '@core/domain/repositories'

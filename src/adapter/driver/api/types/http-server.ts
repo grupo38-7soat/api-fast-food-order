@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 export type IHttpRequest = {
   params?: { [key: string]: string }
   query?: { [key: string]: string }

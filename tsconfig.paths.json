@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@adapter/*": ["adapter/*"],
-      "@config/*": ["config/*"],
-      "@core/*": ["core/*"]
+      "@adapter/*": ["src/adapter/*"],
+      "@config/*": ["src/config/*"],
+      "@core/*": ["src/core/*"]
     }
   }
 }

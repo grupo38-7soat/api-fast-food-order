@@ -10,9 +10,10 @@
     "start:dev": "export NODE_ENV=development && ts-node-dev -r tsconfig-paths/register ./src/bootstrap.ts",
     "start": "export NODE_ENV=production && npm run build && node dist/bootstrap.js",
     "start:prod": "export NODE_ENV=production && npm start",
-    "test": "export NODE_ENV=development && jest --noStackTrace --runInBand --passWithNoTests --silent --forceExit",
-    "test:watch": "export NODE_ENV=development && jest --noStackTrace --runInBand --passWithNoTests --verbose --watch",
-    "test:cov": "npm test -- --coverage --no-cache",
+    "test": "export STAGE=test && jest --noStackTrace --runInBand --silent --passWithNoTests --forceExit --detectOpenHandles",
+    "test:win": "set STAGE=test && jest --noStackTrace --runInBand --silent --passWithNoTests --forceExit --detectOpenHandles",
+    "test:watch": "export STAGE=test && jest --noStackTrace --runInBand --passWithNoTests --forceExit --detectOpenHandles --watch",
+    "test:cov": "export STAGE=test && jest --noStackTrace --runInBand --passWithNoTests --forceExit --detectOpenHandles --coverage --no-cache",
     "lint": "npx eslint --fix --ignore-path .eslintignore --ext .js,.ts ."
   },
   "dependencies": {

@@ -13,7 +13,7 @@ services:
     volumes:
      - ./database:/docker-entrypoint-initdb.d/
     networks:
-     - tech-challenge
+     - fast-food-order
 
   node:
     build: .
@@ -28,7 +28,7 @@ services:
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD}
       - DATABASE_NAME=${POSTGRES_DB}
     networks:
-     - tech-challenge
+     - fast-food-order
 
 networks:
-  tech-challenge:
+  fast-food-order:

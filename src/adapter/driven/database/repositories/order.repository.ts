@@ -90,6 +90,7 @@ export class OrderRepository implements IOrderRepository {
     orderId: number,
     status: OrderCurrentStatus,
     updatedAt: string,
+    payment?: Payment,
   ): Promise<Order> {
     try {
       const { rows } = await this.postgresConnectionAdapter.query<{
@@ -97,11 +98,11 @@ export class OrderRepository implements IOrderRepository {
         updated_at: string
       }>(
         `
-          UPDATE ${this.table} SET status = $1::fast_food.order_status_enum, updated_at = $2::timestamp
+          UPDATE ${this.table} SET status = $1::fast_food.order_status_enum, updated_at = $2::timestamp, payment = $4::jsonb
           WHERE id = $3::integer
           RETURNING status, updated_at
         `,
-        [status, updatedAt, orderId],
+        [status, updatedAt, orderId, payment ?? null],
       )
       if (!rows || !rows.length) return null
       return new Order(

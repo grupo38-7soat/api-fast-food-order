@@ -18,8 +18,14 @@ import { IHttpServer } from '@adapter/driver/api/types/http-server'
 import { PostgresConnectionAdapter } from '@adapter/driven/database/postgres-connection.adapter'
 import { ProductRepository } from '@adapter/driven/database/repositories/product.repository'
 import { OrderRepository } from '@adapter/driven/database/repositories/order.repository'
+import { IAMQPServer } from '@adapter/driver/message-broker/types/message-broker'
+import { AMQPServerAdapter } from '@adapter/driver/message-broker/amqp-server.adapter'
+import { MessageBrokerAdapter } from '@adapter/driver/message-broker/message-broker.adapter'
 
 const postgresConnectionAdapter = new PostgresConnectionAdapter()
+const messageBrokerAdapter = new MessageBrokerAdapter(
+  globalEnvs.messageBroker.url,
+)
 // repositories
 const productRepository = new ProductRepository(postgresConnectionAdapter)
 const orderRepository = new OrderRepository(postgresConnectionAdapter)
@@ -31,6 +37,7 @@ const removeProductUseCase = new RemoveProductUseCase(productRepository)
 const createOrderUseCase = new CreateOrderUseCase(
   productRepository,
   orderRepository,
+  messageBrokerAdapter,
 )
 const searchOrdersUseCase = new SearchOrdersUseCase(orderRepository)
 const updateOrderStatusUseCase = new UpdateOrderStatusUseCase(orderRepository)
@@ -47,9 +54,14 @@ const orderController = new OrderController(
   searchOrdersUseCase,
   updateOrderStatusUseCase,
 )
-const server: IHttpServer = new ExpressHttpServerAdapter(
+const amqpServer: IAMQPServer = new AMQPServerAdapter(
+  messageBrokerAdapter,
+  updateOrderStatusUseCase,
+)
+amqpServer.run(globalEnvs.messageBroker.orderQueue)
+const httpServer: IHttpServer = new ExpressHttpServerAdapter(
   healthController,
   productController,
   orderController,
 )
-server.run(globalEnvs.api.serverPort)
+httpServer.run(globalEnvs.api.serverPort)

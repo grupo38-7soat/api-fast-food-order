@@ -1,4 +1,4 @@
-import { Order, OrderCurrentStatus } from '../entities'
+import { Order, OrderCurrentStatus, Payment } from '../entities'
 
 export type OrderParams = {
   [field: string]: {
@@ -23,6 +23,7 @@ export interface IOrderRepository {
     orderId: number,
     status: OrderCurrentStatus,
     updatedAt: string,
+    payment?: Payment,
   ): Promise<Order>
   findAllOrders(params?: OrderParams): Promise<Order[]>
   findOrderById(orderId: number): Promise<Order>

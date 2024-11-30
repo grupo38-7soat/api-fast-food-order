@@ -1,12 +1,15 @@
+import { randomUUID } from 'crypto'
 import { DomainException, ExceptionCause } from '@core/domain/base'
 import { Order, OrderCurrentStatus, Product } from '@core/domain/entities'
 import { IOrderRepository, IProductRepository } from '@core/domain/repositories'
+import { IMessageBroker } from '@core/application/message-broker'
 import {
   CreateOrderInput,
   CreateOrderOutput,
   ICreateOrderUseCase,
 } from '../types/order'
 import { formatDateWithTimezone } from '@core/application/helpers'
+import { globalEnvs } from '@config/envs/global'
 
 type OrderItem = {
   product: Product
@@ -18,6 +21,7 @@ export class CreateOrderUseCase implements ICreateOrderUseCase {
   constructor(
     private readonly productRepository: IProductRepository,
     private readonly orderRepository: IOrderRepository,
+    private readonly messageBroker: IMessageBroker,
   ) {}
 
   async execute({
@@ -76,7 +80,17 @@ export class CreateOrderUseCase implements ICreateOrderUseCase {
         effectiveDate: currentDate,
       })
     }
-    // TODO: publicar mensagem no tópico
+    await this.messageBroker.publish(globalEnvs.messageBroker.paymentQueue, {
+      id: randomUUID(),
+      payload: {
+        orderId,
+        orderAmount,
+        items,
+        payment: {
+          type: 'PIX',
+        },
+      },
+    })
     const { status, totalAmount } = order.toJson()
     return {
       order: {

@@ -9,6 +9,12 @@ const apiEnvs = {
   stage: process.env.NODE_ENV,
 }
 
+const messageBrokerEnvs = {
+  orderQueue: process.env.MESSAGE_BROKER_ORDER_QUEUE,
+  paymentQueue: process.env.MESSAGE_BROKER_PAYMENT_QUEUE,
+  url: process.env.MESSAGE_BROKER_URL,
+}
+
 const databaseEnvs = {
   host: process.env.DATABASE_HOST,
   port: Number(process.env.DATABASE_PORT),
@@ -26,6 +32,9 @@ const paymentSolutionEnvs = {
 export const globalEnvs = {
   api: {
     ...apiEnvs,
+  },
+  messageBroker: {
+    ...messageBrokerEnvs,
   },
   database: {
     ...databaseEnvs,

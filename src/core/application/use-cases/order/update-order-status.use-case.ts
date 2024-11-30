@@ -1,12 +1,12 @@
 import { DomainException, ExceptionCause } from '@core/domain/base'
 import { OrderCurrentStatus } from '@core/domain/entities'
 import { IOrderRepository } from '@core/domain/repositories'
+import { formatDateWithTimezone } from '@core/application/helpers'
 import {
   IUpdateOrderStatusUseCase,
   UpdateOrderStatusInput,
   UpdateOrderStatusOutput,
 } from '../types/order'
-import { formatDateWithTimezone } from '@core/application/helpers'
 
 export class UpdateOrderStatusUseCase implements IUpdateOrderStatusUseCase {
   constructor(private readonly orderRepository: IOrderRepository) {}
@@ -14,6 +14,7 @@ export class UpdateOrderStatusUseCase implements IUpdateOrderStatusUseCase {
   async execute({
     orderId,
     status,
+    payment,
   }: UpdateOrderStatusInput): Promise<UpdateOrderStatusOutput> {
     if (!orderId || !status) {
       throw new DomainException(
@@ -50,6 +51,7 @@ export class UpdateOrderStatusUseCase implements IUpdateOrderStatusUseCase {
       orderId,
       status,
       formatDateWithTimezone(new Date()),
+      payment,
     )
     if (!updatedOrder) {
       throw new DomainException(

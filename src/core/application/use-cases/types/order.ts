@@ -40,6 +40,7 @@ export type SearchOrdersOutput = {
 export type UpdateOrderStatusInput = {
   orderId: number
   status: OrderCurrentStatus
+  payment?: Payment
 }
 
 export type UpdateOrderStatusOutput = {

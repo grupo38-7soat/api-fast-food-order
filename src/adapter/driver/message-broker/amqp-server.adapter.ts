@@ -14,7 +14,7 @@ export class AMQPServerAdapter implements IAMQPServer {
       try {
         await this.targetUseCase.execute(content.payload)
       } catch (error) {
-        console.error('Erro ao processar mensagem:', error)
+        console.error('[AMQPServer] Erro ao processar mensagem:', error)
       }
     })
     console.log(`[AMQPServer] Monitorando fila: ${queue}`)

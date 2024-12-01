@@ -27,5 +27,4 @@ export interface IOrderRepository {
   ): Promise<Order>
   findAllOrders(params?: OrderParams): Promise<Order[]>
   findOrderById(orderId: number): Promise<Order>
-  findOrderByPaymentId(paymentId: string): Promise<Order>
 }

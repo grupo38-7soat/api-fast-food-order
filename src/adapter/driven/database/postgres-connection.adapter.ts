@@ -30,10 +30,7 @@ export class PostgresConnectionAdapter {
 
   private async connect(): Promise<void> {
     if (!this.pool) {
-      console.log(
-        '[Database] Abrindo conexão com a base de dados',
-        JSON.stringify(globalEnvs.database),
-      )
+      console.log('[Database] Abrindo conexão com a base de dados')
       this.pool = new Pool({
         host: globalEnvs.database.host,
         port: globalEnvs.database.port,

@@ -45,6 +45,11 @@ jobs:
             exit 1;
           fi
 
+      - name: dalay
+        run: sleep 30
+
+      - name: Verificar a pontuação de qualidade se necessário
+        run: |
           # Verificar a pontuação de qualidade se necessário
           SCORE=$(curl -s -u ${{ secrets.SONAR_TOKEN }} "${{ secrets.SONAR_URL }}/api/measures/component?component=$REPO_NAME&metricKeys=coverage" | jq -r .component.measures[0].value)
           echo "SonarQube quality score: $SCORE"

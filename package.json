@@ -1,5 +1,5 @@
 {
-  "name": "project",
+  "name": "api-fast-food-order",
   "version": "0.0.1",
   "main": "main.ts",
   "repository": "git@github.com:grupo38-7soat/tech-challenge.git",
@@ -14,6 +14,7 @@
     "test:win": "set STAGE=test && jest --noStackTrace --runInBand --silent --passWithNoTests --forceExit --detectOpenHandles",
     "test:watch": "export STAGE=test && jest --noStackTrace --runInBand --passWithNoTests --forceExit --detectOpenHandles --watch",
     "test:cov": "export STAGE=test && jest --noStackTrace --runInBand --passWithNoTests --forceExit --detectOpenHandles --coverage --no-cache",
+    "test:cov-win": "set STAGE=test && jest --noStackTrace --runInBand --passWithNoTests --forceExit --detectOpenHandles --coverage --no-cache",
     "lint": "npx eslint --fix --ignore-path .eslintignore --ext .js,.ts ."
   },
   "dependencies": {

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${REPO_NAME}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${REPO_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${REPO_NAME}
+    spec:
+      containers:
+      - name: ${REPO_NAME}
+        image: ${ECR_REGISTRY}/${REPO_NAME}:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

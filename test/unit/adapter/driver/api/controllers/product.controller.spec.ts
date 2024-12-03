@@ -1,5 +1,6 @@
 import { Request as ExpressRequest, Response as ExpressResponse } from 'express'
 import { DomainException, ExceptionCause } from '@core/domain/base'
+import { Category } from '@core/domain/entities'
 import {
   ICreateProductUseCase,
   IUpdateProductUseCase,
@@ -8,7 +9,6 @@ import {
 } from '@core/application/use-cases'
 import { ProductController } from '@adapter/driver/api/controllers'
 import { HttpStatus } from '@adapter/driver/api/types/http-server'
-import { Category } from '@core/domain/entities'
 
 describe('ProductController', () => {
   let createProductUseCaseMock: ICreateProductUseCase

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request as ExpressRequest, Response as ExpressResponse } from 'express'
 import {
   ICreateOrderUseCase,
@@ -8,6 +7,7 @@ import {
 import { OrderCurrentStatus } from '@core/domain/entities'
 import { IOrderController } from './types/controllers'
 import { HttpResponseHelper } from '../helpers'
+import { HttpStatus } from '../types/http-server'
 
 export class OrderController implements IOrderController {
   constructor(
@@ -26,7 +26,10 @@ export class OrderController implements IOrderController {
         items: request.body.items,
         orderAmount: request.body.orderAmount,
       })
-      return HttpResponseHelper.onSucess(response, { data: orderData })
+      return HttpResponseHelper.onSucess(response, {
+        data: orderData,
+        statusCode: HttpStatus.CREATED,
+      })
     } catch (error) {
       return HttpResponseHelper.onError(response, { error })
     }

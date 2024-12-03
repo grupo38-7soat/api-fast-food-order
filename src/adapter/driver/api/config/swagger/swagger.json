@@ -315,7 +315,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Lista de pedidos",
             "content": {
               "application/json": {

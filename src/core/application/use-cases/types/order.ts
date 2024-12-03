@@ -22,8 +22,8 @@ export type CreateOrderOutput = {
 }
 
 export type SearchOrdersInput = {
-  id: number
-  status: OrderCurrentStatus
+  id?: number
+  status?: OrderCurrentStatus
 }
 
 export type SearchOrdersOutput = {

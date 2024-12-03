@@ -20,7 +20,7 @@ export type Payment = {
   externalId: string
 }
 
-type SerializedOrder = {
+export type SerializedOrder = {
   id: number
   effectiveDate: string
   totalAmount: number

@@ -36,23 +36,23 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
 
       # Aguardar o resultado da análise e obter o status da qualidade
-      # - name: Check SonarQube quality gate status
-      #   run: |
-      #     STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }} "${{ secrets.SONAR_URL }}/api/qualitygates/project_status?projectKey=$REPO_NAME" | jq -r .projectStatus.status)
-      #     echo "SonarQube Quality Gate  status: $STATUS"
-      #     if [[ "$STATUS" != "OK" ]]; then
-      #       echo "SonarQube Quality Gate failed: Quality is below the threshold!";
-      #       exit 1;
-      #     fi
+      - name: Check SonarQube quality gate status
+        run: |
+          STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }} "${{ secrets.SONAR_URL }}/api/qualitygates/project_status?projectKey=$REPO_NAME" | jq -r .projectStatus.status)
+          echo "SonarQube Quality Gate  status: $STATUS"
+          if [[ "$STATUS" != "OK" ]]; then
+            echo "SonarQube Quality Gate failed: Quality is below the threshold!";
+            exit 1;
+          fi
 
-      #     # Verificar a pontuação de qualidade se necessário
-      #     SCORE=$(curl -s -u ${{ secrets.SONAR_TOKEN }} "${{ secrets.SONAR_URL }}/api/measures/component?component=$REPO_NAME&metricKeys=coverage" | jq -r '.component.measures[0].value')
-      #     echo "SonarQube quality score: $SCORE"
-      #     if (( $(echo "$SCORE < 1" | bc -l) )); then
-      #       echo "SonarQube Quality Gate failed: Quality score is less than 80%!";
-      #       exit 1;
-      #     fi
-      #     echo "SonarQube quality score is OK"
+          # Verificar a pontuação de qualidade se necessário
+          SCORE=$(curl -s -u ${{ secrets.SONAR_TOKEN }} "${{ secrets.SONAR_URL }}/api/measures/component?component=$REPO_NAME&metricKeys=coverage" | jq -r '.component.measures[0].value')
+          echo "SonarQube quality score: $SCORE"
+          if (( $(echo "$SCORE < 1" | bc -l) )); then
+            echo "SonarQube Quality Gate failed: Quality score is less than 80%!";
+            exit 1;
+          fi
+          echo "SonarQube quality score is OK"
 
   build-and-push-ecr:
     name: Push Docker Image to AWS ECR

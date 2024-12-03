@@ -146,6 +146,9 @@ jobs:
           echo "DATABASE_USER=${{ secrets.DATABASE_USER }}" >> $GITHUB_ENV
           echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
           echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_ORDER_QUEUE=${{ secrets.MESSAGE_BROKER_ORDER_QUEUE }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_PAYMENT_QUEUE=${{ secrets.MESSAGE_BROKER_PAYMENT_QUEUE }}" >> $GITHUB_ENV
+          echo "MESSAGE_BROKER_URL=${{ secrets.MESSAGE_BROKER_URL }}" >> $GITHUB_ENV
           echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> $GITHUB_ENV
 
       # Etapa 6: Substituir variáveis nos arquivos Kubernetes

@@ -1,15 +1,12 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Fast Food",
+    "title": "Fast Food | Pedido",
     "version": "1.0.0",
-    "description": "Documentation for your API"
+    "description": "Documentação da API de pedidos do sistema de Fast Food"
   },
-  "baseUrl": "http://localhost:3000",
+  "baseUrl": "http://localhost:5000",
   "tags": [
-    {
-      "name": "Cliente"
-    },
     {
       "name": "Produto"
     },

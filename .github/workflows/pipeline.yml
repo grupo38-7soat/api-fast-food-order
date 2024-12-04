@@ -2,10 +2,10 @@ on:
   push:
     branches:
       - main
-      - release
 
 env:
   CLUSTER_NAME: "infra-tech-challenge"  # Nome do cluster EKS
+  SONAR_REQUIRED_SCORE: 70
 
 jobs:
   build:
@@ -48,7 +48,7 @@ jobs:
           # Verificar a pontuação de qualidade se necessário
           SCORE=$(curl -s -u ${{ secrets.SONAR_TOKEN }} "${{ secrets.SONAR_URL }}/api/measures/component?component=$REPO_NAME&metricKeys=coverage" | jq -r '.component.measures[0].value')
           echo "SonarQube quality score: $SCORE"
-          if (( $(echo "$SCORE < 1" | bc -l) )); then
+          if (( $(echo "$SCORE < $SONAR_REQUIRED_SCORE" | bc -l) )); then
             echo "SonarQube Quality Gate failed: Quality score is less than 80%!";
             exit 1;
           fi
@@ -155,12 +155,10 @@ jobs:
       - name: Substitute variables in deployment.yaml
         run: |
           envsubst < k8s/deployment.yaml > k8s/deployment-final.yaml
-          cat k8s/deployment-final.yaml
 
       - name: Substitute variables in service.yaml
         run: |
           envsubst < k8s/service.yaml > k8s/service-final.yaml
-          cat k8s/service-final.yaml
 
       # Etapa 7: Aplicar Kubernetes manifests
       - name: Apply Kubernetes manifests

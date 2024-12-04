@@ -24,12 +24,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/pedidos",
+							"raw": "http://localhost:8081/pedidos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "8081",
 							"path": [
 								"pedidos"
 							]
@@ -43,12 +43,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/pedidos",
+							"raw": "http://localhost:8081/pedidos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "8081",
 							"path": [
 								"pedidos"
 							]
@@ -71,12 +71,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/pedidos/10/status",
+							"raw": "http://localhost:8081/pedidos/10/status",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "8081",
 							"path": [
 								"pedidos",
 								"10",
@@ -106,12 +106,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/produtos",
+							"raw": "http://localhost:8081/produtos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "8081",
 							"path": [
 								"produtos"
 							]
@@ -134,12 +134,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/produtos/29",
+							"raw": "http://localhost:8081/produtos/29",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "8081",
 							"path": [
 								"produtos",
 								"29"
@@ -154,12 +154,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/produtos/21",
+							"raw": "http://localhost:8081/produtos/21",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "8081",
 							"path": [
 								"produtos",
 								"21"
@@ -174,12 +174,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/produtos",
+							"raw": "http://localhost:8081/produtos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "8081",
 							"path": [
 								"produtos"
 							]
@@ -195,12 +195,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/health",
+					"raw": "http://localhost:8081/health",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "8081",
 					"path": [
 						"health"
 					]

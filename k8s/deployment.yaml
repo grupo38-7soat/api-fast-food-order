@@ -33,7 +33,7 @@ spec:
       - name: ${REPO_NAME}
         image: ${ECR_REGISTRY}/${REPO_NAME}:latest
         ports:
-        - containerPort: 5000
+        - containerPort: 8081
         envFrom:
         - configMapRef:
             name: ${REPO_NAME}-secret
